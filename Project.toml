@@ -3,11 +3,9 @@ uuid = "934fee63-dd58-4ecc-8c54-38e4c5b9e062"
 authors = ["Javier González-Monge"]
 version = "0.1.0"
 
+[deps]
+Pluto = "c3e4b0f8-55cb-11ea-2926-15256bba5781"
+
 [compat]
 julia = "1.8"
-
-[extras]
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
-
-[targets]
-test = ["Test"]
+Pluto = "0.19"
