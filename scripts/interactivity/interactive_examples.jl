@@ -4,21 +4,21 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 58fdf9e2-8dc6-43e2-9798-8e992dac2053
+# ╔═╡ 24ebda93-84c0-45ad-9614-3713c3b10f6a
 begin
 	using PlutoUI
 	PlutoUI.TableOfContents(title="Tabla de Contenidos", depth=3, aside=true, indent=true)
 end
 
-# ╔═╡ 719af058-3505-4ede-be04-557a448d8ade
+# ╔═╡ e6320cf8-9301-11ec-3f30-93a359f008f5
 html"""
 <div class="banner-background">
 </div>
 
 <div class="nb-intro">
 	<div class="header-box"> 
-		<p class="nb-intro-header"> Tema 1 </p>
-		<p class="nb-intro-title"> Título de la sección dentro del tema a tratar</p>
+		<p class="nb-intro-header"> Cuadernos Pluto </p>
+		<p class="nb-intro-title">Pluto: Aprendizaje interactivo usando Julia</p>
 		<p style="text-align:center;"> 
 			<img src="https://github.com/RayleighLord/Resources/blob/main/img/logos/logo.png?raw=true" alt="RayleighLord"
 			width="150"
@@ -109,6 +109,9 @@ main preamble {
 
 </style>
 """
+
+# ╔═╡ 0797877e-a115-481e-9522-19fd91e001b1
+space = html"<br><br><br>";
 
 # ╔═╡ 82282db6-240f-4318-a475-f91229aa6c76
 note(text) = Markdown.MD(Markdown.Admonition("note", "Nota", [text]));
@@ -285,9 +288,9 @@ version = "0.3.20+0"
 
 [[deps.Parsers]]
 deps = ["Dates"]
-git-tree-sha1 = "3d5bf43e3e8b412656404ed9466f1dcbf7c50269"
+git-tree-sha1 = "0044b23da09b5608b4ecacb4e5e6c6332f833a7e"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.4.0"
+version = "2.3.2"
 
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
@@ -383,8 +386,9 @@ version = "17.4.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╟─719af058-3505-4ede-be04-557a448d8ade
-# ╠═58fdf9e2-8dc6-43e2-9798-8e992dac2053
+# ╟─e6320cf8-9301-11ec-3f30-93a359f008f5
+# ╠═24ebda93-84c0-45ad-9614-3713c3b10f6a
+# ╟─0797877e-a115-481e-9522-19fd91e001b1
 # ╟─82282db6-240f-4318-a475-f91229aa6c76
 # ╟─19c98e87-2114-4362-aa55-4859c20ffc27
 # ╟─80e9a650-57d9-4e11-acad-aa0f5894ef34

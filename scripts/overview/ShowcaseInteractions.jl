@@ -4,21 +4,31 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 58fdf9e2-8dc6-43e2-9798-8e992dac2053
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
+# ╔═╡ 24ebda93-84c0-45ad-9614-3713c3b10f6a
 begin
 	using PlutoUI
 	PlutoUI.TableOfContents(title="Tabla de Contenidos", depth=3, aside=true, indent=true)
 end
 
-# ╔═╡ 719af058-3505-4ede-be04-557a448d8ade
+# ╔═╡ e6320cf8-9301-11ec-3f30-93a359f008f5
 html"""
 <div class="banner-background">
 </div>
 
 <div class="nb-intro">
 	<div class="header-box"> 
-		<p class="nb-intro-header"> Tema 1 </p>
-		<p class="nb-intro-title"> Título de la sección dentro del tema a tratar</p>
+		<p class="nb-intro-header">PlutoUI</p>
+		<p class="nb-intro-title">Gallery of the interactive elements of Pluto</p>
 		<p style="text-align:center;"> 
 			<img src="https://github.com/RayleighLord/Resources/blob/main/img/logos/logo.png?raw=true" alt="RayleighLord"
 			width="150"
@@ -110,20 +120,250 @@ main preamble {
 </style>
 """
 
+# ╔═╡ 7892846a-b987-4b84-890a-6fb305ba19c0
+md"""
+# Sección 1
+"""
+
+# ╔═╡ 1a7ed7ab-e666-4074-ad89-81126d49aa80
+md"""
+## Subsección 1.1
+"""
+
+# ╔═╡ 4e260b6f-faa3-4eb8-9a21-f18bc77e5245
+md"""
+α= $(@bind α Slider(-30:.5:30, show_value=true, default=0))
+"""
+
+# ╔═╡ a4abe001-1e6f-40a8-8e90-83a2ec3f9528
+let
+
+range = -1.5:.1:1.5
+md"""
+	
+This is a "scrubbable" matrix: click on the number and drag to change!
+	
+**A =**  
+	
+``(``	
+ $(@bind a Scrubbable( range; default=1.0))
+ $(@bind b Scrubbable( range; default=0.0))
+``)``
+
+``(``
+$(@bind c Scrubbable(range; default=0.0 ))
+$(@bind d Scrubbable(range; default=1.0)) 
+``)``  
+	
+
+	
+"""
+end
+
+# ╔═╡ fc7a638a-279e-4072-8728-dd1bb3a3d13a
+md"""
+Show grid lines $(@bind show_grid CheckBox(default=true))
+"""
+
+# ╔═╡ 1dd5b258-0b1a-4748-89a9-d6b9e840a7d2
+md"""
+Text Field $(@bind text TextField((30, 1), default="Hello"))
+"""
+
+# ╔═╡ b50f71af-8ddf-404c-b4a9-757636c9b460
+md"""
+Vegetal $(@bind vegetable Select(["potato", "carrot"]))
+"""
+
+# ╔═╡ 659b8a0c-1624-47bb-ab26-a152fd982bf2
+md"""
+Fruta $(@bind fruit Select(["apple" => "🍎", "melon" => "🍉"]))
+"""
+
+# ╔═╡ 4ff355ad-b018-4756-a31c-65db23d19c89
+md"""
+Vegetable Basket $(@bind vegetable_basket MultiSelect(["potato", "carrot", "boerenkool"]))
+"""
+
+# ╔═╡ bc9ffb24-ae96-4842-b479-ae5b8d1eadcb
+md"""
+`f = ` $(@bind f html"<input type=color >")
+"""
+
+# ╔═╡ 61a6616d-635c-43cb-9b0f-cc67a45ad9e2
+md"""
+Fruit Basket $(@bind fruit_basket MultiCheckBox(["apple", "blueberry", "mango"]))
+"""
+
+# ╔═╡ 6f768e78-0b06-4a6b-8fc1-cb4e6dda18d6
+md"""
+Choose Functions $(@bind my_functions MultiCheckBox([sin, cos, tan]))
+"""
+
+# ╔═╡ 1f5469e8-6333-44fb-a1a4-25ffcfeb510b
+[f(π) for f in my_functions]
+
+# ╔═╡ 967a00af-5203-4e03-aaef-9eed6a6e36f4
+md"""
+Botón $(@bind clicked Button("Hello world"))
+"""
+
+# ╔═╡ f95133c8-765a-4384-9c50-747ed3d92bf3
+clicked
+
+# ╔═╡ 328c807c-6d24-4ba8-b1ca-f59904682a66
+md"""
+Botón reactivo $(@bind go Button("Recompute"))
+"""
+
+# ╔═╡ 94943965-fa5d-4e93-8d39-fe75de0842ac
+let
+	go
+	
+	md"I am $(rand(1:15)) years old!"
+end
+
+# ╔═╡ 34b6afaf-df24-477c-b6e4-9e95380ab2c0
+md"""
+Elige un archivo $(@bind important_document FilePicker())
+"""
+
+# ╔═╡ facafd92-5ac2-4626-95e9-379a0f5d25d0
+important_document
+
+# ╔═╡ 916bbf50-871c-4298-90e2-e84500b3ed20
+@bind t Clock()
+
+# ╔═╡ 03d32c48-445f-4398-91f4-5482a7dadbc9
+t
+
+# ╔═╡ 009559fb-84a8-41e1-8444-1f73cf5c4e5b
+@bind t_slow Clock(5.0, true)
+
+# ╔═╡ ba7313d6-a863-4025-a801-bcb452b4313d
+t_slow
+
+# ╔═╡ 4c67fdcd-de63-4cc0-b8b1-558542058d6d
+DownloadButton([0x01, 0x02, 0x03], "secret_data.bin")
+
+# ╔═╡ 2045e332-6938-4fc1-aa9a-c6a0609b9025
+@bind distance confirm(Slider(1:100))
+
+# ╔═╡ 51c2ffc0-2d02-4099-9326-8179ec540bf7
+distance
+
+# ╔═╡ 842e5651-4eff-4c55-b064-57ea7f331171
+import PlutoUI: combine
+
+# ╔═╡ 07602db6-d356-4451-b732-14b3611c3dd0
+function wind_speed_input(directions::Vector)
+	
+	return combine() do Child
+		
+		inputs = [
+			md""" $(name): $(
+				Child(name, Slider(1:100))
+			)"""
+			
+			for name in directions
+		]
+		
+		md"""
+		#### Wind speeds
+		$(inputs)
+		"""
+	end
+end
+
+# ╔═╡ 87b28036-d44f-4ed3-9dc6-0ace5f647c47
+@bind speeds wind_speed_input(["North", "East", "South", "West"])
+
+# ╔═╡ b0966648-5ecc-40a5-90a9-663ba333a5bb
+speeds
+
+# ╔═╡ 42cf493c-6a94-4f72-9eda-29bbb44cac89
+dog_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Welsh_Springer_Spaniel.jpg/640px-Welsh_Springer_Spaniel.jpg"
+
+# ╔═╡ 9894d00b-df65-4ee5-9799-a225f5ffd713
+t_rex_url = "https://upload.wikimedia.org/wikipedia/commons/transcoded/6/62/Meow.ogg/Meow.ogg.mp3"
+
+# ╔═╡ e17ec97b-1281-4ed7-b122-bd8a86495ece
+flower_url = "https://upload.wikimedia.org/wikipedia/commons/4/41/Sunflower_Flower_Opening_Time_Lapse.ogv"
+
+# ╔═╡ 98d5007f-d06c-4da9-b151-93956e38b467
+md"""Hello I am a dog $(Resource(dog_url))"""
+
+# ╔═╡ 620589bf-d86d-47b7-9aa9-be4707991e09
+md"""And I sound like this: $(Resource(t_rex_url))"""
+
+# ╔═╡ 951219e2-a8f1-4890-802f-952e3433bc77
+md"""This is my flower friend
+
+$(Resource(flower_url, :width => 400))"""
+
+# ╔═╡ 0317e5f8-268a-467c-b5e4-f5ce72702c3e
+md"""
+$(Resource(dog_url, :width => 20))
+$(Resource(dog_url, :width => 50))
+$(Resource(dog_url, :width => 100))
+$(Resource(dog_url, 
+	:width => 100, 
+	:style => "filter: grayscale(100%); border: 3px solid black;"))
+"""
+
+# ╔═╡ 91c69050-d6b2-4c2e-8a4b-3723328b9df8
+Resource(flower_url, :width => 200, :autoplay => "", :loop => "")
+
+# ╔═╡ d3c6c218-3366-4599-8475-087f5eebd493
+html"""
+
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/438210156" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+
+"""
+
+# ╔═╡ 4976ee97-377d-484d-874b-da12f41a6437
+md"""
+### Subsubsección 1.1.1
+"""
+
+# ╔═╡ 0797877e-a115-481e-9522-19fd91e001b1
+space = html"<br><br><br>"
+
 # ╔═╡ 82282db6-240f-4318-a475-f91229aa6c76
 note(text) = Markdown.MD(Markdown.Admonition("note", "Nota", [text]));
+
+# ╔═╡ 1088e673-bb77-4de6-848d-8a5f13d37cfc
+note(md"""
+Esto es una nota
+""")
 
 # ╔═╡ 19c98e87-2114-4362-aa55-4859c20ffc27
 hint(text) = Markdown.MD(Markdown.Admonition("hint", "Pista 🔎", [text]));
 
+# ╔═╡ 00fd0e72-2ece-488a-88d4-8be257e91e44
+hint(md"""
+Esto es una pista
+""")
+
 # ╔═╡ 80e9a650-57d9-4e11-acad-aa0f5894ef34
 almost(text) = Markdown.MD(Markdown.Admonition("warning", "¡Ya casi lo tienes!", [text]));
+
+# ╔═╡ fb1d1abf-dc78-459f-be85-9d9c49ca4457
+almost(md"""
+Solo te queda muy poco para obtener la respuesta correcta!
+""")
 
 # ╔═╡ 7a89b51b-51d7-4090-8a9f-2585363183fc
 still_missing(text=md"Sustituye `missing` por tu respuesta.") = Markdown.MD(Markdown.Admonition("warning", "Completa el ejercicio 🧐", [text]));
 
+# ╔═╡ 2064bff8-d401-4fed-9387-745fc2159208
+still_missing()
+
 # ╔═╡ a9cd5b48-921f-4b48-8c63-5060c5d7c1d5
 keep_working(text=md"La respuesta todavía no es correcta.") = Markdown.MD(Markdown.Admonition("danger", "¡Sigue intentándolo!", [text]));
+
+# ╔═╡ 3ee97499-95ae-4eb9-a889-a214d56ef786
+keep_working()
 
 # ╔═╡ 20089647-2ac5-405f-b8ba-aa5dd1733271
 good = [md"¡Buen trabajo! 🎉", md"¡Correcto! 🎉", md"¡Bien hecho! 👍", md"La respuesta es correcta 🎉", md"Continúa a la siguiente pregunta 👍", md"¡Enhorabuena! 🎉",];
@@ -131,13 +371,22 @@ good = [md"¡Buen trabajo! 🎉", md"¡Correcto! 🎉", md"¡Bien hecho! 👍", 
 # ╔═╡ 8fd2f719-294a-41cc-bb47-5afbbc2bfa9c
 correct(text=rand(good)) = Markdown.MD(Markdown.Admonition("correct", "Lo conseguiste!", [text]));
 
+# ╔═╡ 57f3ef0d-429b-41d0-a342-abfa2ad16a87
+correct()
+
 # ╔═╡ 3f6aec31-e108-4caf-bec1-c4ae57b6b72c
 not_defined(variable_name) = Markdown.MD(Markdown.Admonition("danger", "¡Cuidado!", [md"Aségurate de haber definido una variable llamada **$(Markdown.Code(string(variable_name)))**"]));
+
+# ╔═╡ f528d7b1-f115-4896-bf09-0d842041919c
+not_defined(:square_matrix)
 
 # ╔═╡ 5ec67974-c7dc-43d6-a0ef-b804ab1bf64b
 todo(text) = HTML("""<div
 	style="background: rgb(220, 200, 255); padding: 2em; border-radius: 1em;"
 	><h2>TODO</h2>$(repr(MIME"text/html"(), text))</div>""");
+
+# ╔═╡ 7d4b625d-4e24-42a1-96e1-fd5909862dbb
+todo(md"Todavía falta por implementar el bucle `for`")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -285,9 +534,9 @@ version = "0.3.20+0"
 
 [[deps.Parsers]]
 deps = ["Dates"]
-git-tree-sha1 = "3d5bf43e3e8b412656404ed9466f1dcbf7c50269"
+git-tree-sha1 = "0044b23da09b5608b4ecacb4e5e6c6332f833a7e"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.4.0"
+version = "2.3.2"
 
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
@@ -383,8 +632,57 @@ version = "17.4.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╟─719af058-3505-4ede-be04-557a448d8ade
-# ╠═58fdf9e2-8dc6-43e2-9798-8e992dac2053
+# ╟─e6320cf8-9301-11ec-3f30-93a359f008f5
+# ╠═24ebda93-84c0-45ad-9614-3713c3b10f6a
+# ╟─7892846a-b987-4b84-890a-6fb305ba19c0
+# ╟─1a7ed7ab-e666-4074-ad89-81126d49aa80
+# ╠═4e260b6f-faa3-4eb8-9a21-f18bc77e5245
+# ╠═a4abe001-1e6f-40a8-8e90-83a2ec3f9528
+# ╠═fc7a638a-279e-4072-8728-dd1bb3a3d13a
+# ╠═1dd5b258-0b1a-4748-89a9-d6b9e840a7d2
+# ╠═b50f71af-8ddf-404c-b4a9-757636c9b460
+# ╠═659b8a0c-1624-47bb-ab26-a152fd982bf2
+# ╠═4ff355ad-b018-4756-a31c-65db23d19c89
+# ╠═bc9ffb24-ae96-4842-b479-ae5b8d1eadcb
+# ╠═61a6616d-635c-43cb-9b0f-cc67a45ad9e2
+# ╠═6f768e78-0b06-4a6b-8fc1-cb4e6dda18d6
+# ╠═1f5469e8-6333-44fb-a1a4-25ffcfeb510b
+# ╠═967a00af-5203-4e03-aaef-9eed6a6e36f4
+# ╠═f95133c8-765a-4384-9c50-747ed3d92bf3
+# ╠═328c807c-6d24-4ba8-b1ca-f59904682a66
+# ╠═94943965-fa5d-4e93-8d39-fe75de0842ac
+# ╠═34b6afaf-df24-477c-b6e4-9e95380ab2c0
+# ╠═facafd92-5ac2-4626-95e9-379a0f5d25d0
+# ╠═916bbf50-871c-4298-90e2-e84500b3ed20
+# ╠═03d32c48-445f-4398-91f4-5482a7dadbc9
+# ╠═009559fb-84a8-41e1-8444-1f73cf5c4e5b
+# ╠═ba7313d6-a863-4025-a801-bcb452b4313d
+# ╠═4c67fdcd-de63-4cc0-b8b1-558542058d6d
+# ╠═2045e332-6938-4fc1-aa9a-c6a0609b9025
+# ╠═51c2ffc0-2d02-4099-9326-8179ec540bf7
+# ╠═842e5651-4eff-4c55-b064-57ea7f331171
+# ╠═87b28036-d44f-4ed3-9dc6-0ace5f647c47
+# ╠═b0966648-5ecc-40a5-90a9-663ba333a5bb
+# ╠═07602db6-d356-4451-b732-14b3611c3dd0
+# ╠═42cf493c-6a94-4f72-9eda-29bbb44cac89
+# ╠═9894d00b-df65-4ee5-9799-a225f5ffd713
+# ╠═e17ec97b-1281-4ed7-b122-bd8a86495ece
+# ╠═98d5007f-d06c-4da9-b151-93956e38b467
+# ╠═620589bf-d86d-47b7-9aa9-be4707991e09
+# ╠═951219e2-a8f1-4890-802f-952e3433bc77
+# ╠═0317e5f8-268a-467c-b5e4-f5ce72702c3e
+# ╠═91c69050-d6b2-4c2e-8a4b-3723328b9df8
+# ╠═d3c6c218-3366-4599-8475-087f5eebd493
+# ╟─4976ee97-377d-484d-874b-da12f41a6437
+# ╠═1088e673-bb77-4de6-848d-8a5f13d37cfc
+# ╠═00fd0e72-2ece-488a-88d4-8be257e91e44
+# ╠═fb1d1abf-dc78-459f-be85-9d9c49ca4457
+# ╠═2064bff8-d401-4fed-9387-745fc2159208
+# ╠═3ee97499-95ae-4eb9-a889-a214d56ef786
+# ╠═57f3ef0d-429b-41d0-a342-abfa2ad16a87
+# ╠═f528d7b1-f115-4896-bf09-0d842041919c
+# ╠═7d4b625d-4e24-42a1-96e1-fd5909862dbb
+# ╟─0797877e-a115-481e-9522-19fd91e001b1
 # ╟─82282db6-240f-4318-a475-f91229aa6c76
 # ╟─19c98e87-2114-4362-aa55-4859c20ffc27
 # ╟─80e9a650-57d9-4e11-acad-aa0f5894ef34

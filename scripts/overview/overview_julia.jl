@@ -6,8 +6,8 @@ using InteractiveUtils
 
 # ╔═╡ 85655f3a-d7ec-4c39-adcb-6b5893a435f9
 begin
-    using PlutoUI
-    PlutoUI.TableOfContents(title="Tabla de Contenidos", depth=3, aside=true, indent=true)
+	using PlutoUI
+	PlutoUI.TableOfContents(title="Tabla de Contenidos", depth=3, aside=true, indent=true)
 end
 
 # ╔═╡ fa730b29-923f-4aac-9746-c4263cd13ef4
@@ -18,21 +18,21 @@ using BenchmarkTools
 
 # ╔═╡ c2fee776-5fa2-4014-86be-392327c7e414
 begin
-    using Libdl
-    C_code = """
-        #include <stddef.h>
-        double c_sum(size_t n, double *X) {
-            double s = 0.0;
-            for (size_t i = 0; i < n; ++i) {
-                s += X[i];
-            }
-            return s;
-        }
-    """
-    const Clib = tempname()
-    open(`gcc -fPIC -O3 -msse3 -xc -shared -o $(Clib * "." * Libdl.dlext) -`, "w") do f
-        print(f, C_code)
-    end
+	using Libdl
+	C_code = """
+	    #include <stddef.h>
+	    double c_sum(size_t n, double *X) {
+	        double s = 0.0;
+	        for (size_t i = 0; i < n; ++i) {
+	            s += X[i];
+	        }
+	        return s;
+	    }
+	"""
+	const Clib = tempname()
+	open(`gcc -fPIC -O3 -msse3 -xc -shared -o $(Clib * "." * Libdl.dlext) -`, "w") do f
+    print(f, C_code)
+end
 end
 
 # ╔═╡ cfcae87d-a350-46bb-a2a2-882c4f2ab982
@@ -44,10 +44,10 @@ html"""
 </div>
 
 <div class="nb-intro">
-	<div class="header-box">
+	<div class="header-box"> 
 		<p class="nb-intro-header">Introducción</p>
 		<p class="nb-intro-title">Julia, un lenguaje para el cálculo científico</p>
-		<p style="text-align:center;">
+		<p style="text-align:center;"> 
 			<img src="https://github.com/RayleighLord/Resources/blob/main/img/logos/julia-logo.png?raw=true" alt="RayleighLord"
 			width="325"
 			class="logo">
@@ -95,7 +95,7 @@ html"""
 }
 
 .header-box:hover {
-	transform: translateY(-5px);
+	transform: translateY(-5px);	
 	box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.3);
 }
 
@@ -145,7 +145,7 @@ md"""
 
 # ╔═╡ b14db253-adee-4588-a87a-d31ba0b3f289
 md"""
-**Julia** es un lenguaje de propósito general, pero con el cálculo científico con un rol central en el desarrollo del mismo.
+**Julia** es un lenguaje de propósito general, pero con el cálculo científico con un rol central en el desarrollo del mismo. 
 
 En este cuaderno interactivo se van a mostrar algunas de las características de este lenguaje, para ilustrar el atractivo que tiene para hacer ciencia, teniendo la sintáxis más conectada con las ecuaciones que uno escribe en un papel.
 
@@ -159,7 +159,7 @@ md"""
 
 # ╔═╡ 9f7f0c59-1048-46fd-a898-142bfaf8fb1c
 md"""
-Productos con vectores y matrices son dos tipos de operaciones muy demandadas a realizar por un ordenador. Veamos cómo se trabaja con estos elementos en **Julia**, haciendo uso de caracteres especiales que este lenguaje nos permite para acercar el código lo más posible a las matemáticas.
+Productos con vectores y matrices son dos tipos de operaciones muy demandadas a realizar por un ordenador. Veamos cómo se trabaja con estos elementos en **Julia**, haciendo uso de caracteres especiales que este lenguaje nos permite para acercar el código lo más posible a las matemáticas. 
 """
 
 # ╔═╡ 208a0087-4839-41de-a9fb-bad8f8bfc69f
@@ -196,7 +196,7 @@ md"""
 
 # ╔═╡ 5ff813d1-4e2f-4ada-9566-1d4102d8ee9e
 md"""
-Una vez hemos creado vectores, vamos a ver cómo se trabaja con ellos en Julia. Como este lenguaje permite usar un amplio rango de caracteres, también podemos incluir aquellos que representan ciertas operaciones matemáticas. Por ello, debido a la expresividad que tiene el lenguaje,  se pueden utilizar símbolos como `⋅` y `×` para ejecutar la operación de producto escalar y vectorial, respectivamente.
+Una vez hemos creado vectores, vamos a ver cómo se trabaja con ellos en Julia. Como este lenguaje permite usar un amplio rango de caracteres, también podemos incluir aquellos que representan ciertas operaciones matemáticas. Por ello, debido a la expresividad que tiene el lenguaje,  se pueden utilizar símbolos como `⋅` y `×` para ejecutar la operación de producto escalar y vectorial, respectivamente. 
 
 Estas operaciones ya están definidas en la librería de Álgebra Lineal, que se puede importar con la línea `using LinearAlgebra`.
 """
@@ -235,12 +235,12 @@ u⃗ × v⃗ # Esta línea se escribe u\vec<tab> \times<tab> v\vec<tab>
 
 # ╔═╡ 52312114-6ff5-44aa-8e51-205e152d7bac
 md"""
-- El **producto escalar** elimina una dimensión a los vectores, devolviendo un escalar.
-- El **producto vectorial** no varía el rango de los vectores, devolviendo otro vector del mismo tamaño.
+- El **producto escalar** elimina una dimensión a los vectores, devolviendo un escalar. 
+- El **producto vectorial** no varía el rango de los vectores, devolviendo otro vector del mismo tamaño. 
 
-Ahora vamos a ver un tipo de operación que se denota como **producto tensorial**, el cual partiendo de dos vectores sube de rango y nos devuelve una matriz. Esta operación se denota con el símbolo `⊗` y, de manera visual, la operación que se realiza es
+Ahora vamos a ver un tipo de operación que se denota como **producto tensorial**, el cual partiendo de dos vectores sube de rango y nos devuelve una matriz. Esta operación se denota con el símbolo `⊗` y, de manera visual, la operación que se realiza es 
 
-$$\vec{u} \otimes \vec{v} = \begin{pmatrix}1 \\ 2 \\ 3\end{pmatrix} \otimes \begin{pmatrix}1 & 1 & 1\end{pmatrix} = \begin{pmatrix}1 * \begin{pmatrix}1 & 1 & 1\end{pmatrix}  \\ 2 * \begin{pmatrix}1 & 1 & 1\end{pmatrix} \\ 3 * \begin{pmatrix}1 & 1 & 1\end{pmatrix}\end{pmatrix} =
+$$\vec{u} \otimes \vec{v} = \begin{pmatrix}1 \\ 2 \\ 3\end{pmatrix} \otimes \begin{pmatrix}1 & 1 & 1\end{pmatrix} = \begin{pmatrix}1 * \begin{pmatrix}1 & 1 & 1\end{pmatrix}  \\ 2 * \begin{pmatrix}1 & 1 & 1\end{pmatrix} \\ 3 * \begin{pmatrix}1 & 1 & 1\end{pmatrix}\end{pmatrix} = 
 \begin{pmatrix}
 1 & 1 & 1 \\
 2 & 2 & 2 \\
@@ -285,9 +285,9 @@ Para generar una matriz, utilizamos una sintáxis idéntica a como lo escribirí
 """
 
 # ╔═╡ f8dfb372-07ba-4510-88ca-e94e4bd1d2a5
-A = [1 2 3
-    4 2 0
-    2 1 1]
+A = [1  2  3
+     4  2  0 
+     2  1  1]
 
 # ╔═╡ ab61018a-bf28-4394-b09e-84d0e1b567ef
 md"""
@@ -317,7 +317,7 @@ v⃗' * A * u⃗
 md"""
 Ahora vamos a ver brevemente cómo resolver un sistema lineal de ecuaciones en Julia. La resolución de sistemas lineales es uno de los problemas más frecuentes para los que se recurre a un ordenador. Estos problemas son del tipo $Ax = b$, donde para un $A$ y $b$ conocidos, tenemos que hallar el vector de incógnitas $x$.
 
-Sin mucho conocimiento de nuestro problema, la aproximación más sencilla es utilizar el operador `\`, que resuelve el sistema sin invertir la matriz, por motivos de eficiencia. Sin embargo, Julia es un lenguaje que dependiendo del tipo de los argumentos de entrada de las funciones, puede ejecutar unas sentencias u otras (en inglés esto se llama *multiple dispatch* y es más general que la sobrecarga de funciones que hay en otros lenguajes como C++).
+Sin mucho conocimiento de nuestro problema, la aproximación más sencilla es utilizar el operador `\`, que resuelve el sistema sin invertir la matriz, por motivos de eficiencia. Sin embargo, Julia es un lenguaje que dependiendo del tipo de los argumentos de entrada de las funciones, puede ejecutar unas sentencias u otras (en inglés esto se llama *multiple dispatch* y es más general que la sobrecarga de funciones que hay en otros lenguajes como C++). 
 
 Así, si por ejemplo la matriz `A` que le damos es una matriz factorizada con un tipo que reconoce Julia, el operador `\` se aprovecha directamente de esta factorización.
 """
@@ -391,7 +391,7 @@ Una manera equivalente de definir la función `f(x)`, con una sintáxis más par
 
 # ╔═╡ 130d6e36-f8e6-4382-b6a3-7a4dd83c5bb4
 function g(x)
-    return x^3 + 6x
+	return x^3 + 6x
 end
 
 # ╔═╡ 67171529-8374-4bb3-a1e4-9a0444611c73
@@ -497,11 +497,11 @@ A continuación, realizamos una implementación sencilla de la función `j_suma`
 
 # ╔═╡ ce98ba8d-eccd-4df5-95d2-0d354334bfaf
 function j_suma(xs::Vector{Float64})
-    suma = 0.0
-    for x in xs
-        suma += x
-    end
-    return suma
+	suma = 0.0
+	for x in xs
+		suma += x
+	end
+	return suma
 end
 
 # ╔═╡ 28af7bdc-a27e-4f65-985a-4f2efd7c57f6
@@ -527,21 +527,21 @@ c_suma(X::Array{Float64}) = ccall(("c_sum", Clib), Float64, (Csize_t, Ptr{Float6
 
 # ╔═╡ 82fb52d0-d02f-434b-aab2-78d090092d13
 md"""
-A la vista de los benchmark anteriores, una implementación *naive* de la función suma tanto en Julia como en C aporta tiempos muy similares.
+A la vista de los benchmark anteriores, una implementación *naive* de la función suma tanto en Julia como en C aporta tiempos muy similares. 
 
 Probemos esta misma implementación utilizando Python nativo (sin librerías).
 """
 
 # ╔═╡ a52b5ed1-a6ce-49f4-9999-fd0f59b0f8e6
 begin
-    py"""
-    def py_suma(xs):
-    	s = 0.0
-    	for x in xs:
-    		s +=x
-    	return s
-    """
-    suma_py = py"py_suma"
+py"""
+def py_suma(xs):
+	s = 0.0
+	for x in xs:
+		s +=x
+	return s
+"""
+suma_py = py"py_suma"
 end
 
 # ╔═╡ e7088dc8-25c6-4eb4-9050-8deb67008e71
@@ -549,7 +549,7 @@ end
 
 # ╔═╡ 0d7df1b9-c9cf-4967-89b7-2b1bebb04945
 md"""
-Como se puede ver, la implementación nativa de Python es muchísimo más lenta que Julia y C. Esto es debido a que, en un lenguaje interpretado, la ejecución de bucles es una operación muy mala para el rendimiento porque en cada iteración tiene que checkear los tipos de variables.
+Como se puede ver, la implementación nativa de Python es muchísimo más lenta que Julia y C. Esto es debido a que, en un lenguaje interpretado, la ejecución de bucles es una operación muy mala para el rendimiento porque en cada iteración tiene que checkear los tipos de variables. 
 
 En Python, para conseguir velocidad se necesita utilizar una librería llamada NumPy, la cual llama a códigos optimizados en C y Fortran para realizar este tipo de cálculos. En la jerga de Python y MATLAB, siempre se suele decir que para obtener rendimiento hay que vectorizar todo lo posible el código, que no es otra cosa que escribirlo de tal manera que se puedan hacer el máximo número de llamadas posibles a lenguajes de bajo nivel que ejecuten el código de manera muy eficiente.
 """
