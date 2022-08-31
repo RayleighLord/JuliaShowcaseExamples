@@ -31,7 +31,7 @@ html"""
 		<p class="nb-intro-title">Gallery of the interactive elements of Pluto</p>
 		<p style="text-align:center;"> 
 			<img src="https://github.com/RayleighLord/Resources/blob/main/img/logos/logo.png?raw=true" alt="RayleighLord"
-			width="150"
+			width="30%"
 			class="logo">
 		</p>
 	</div>
@@ -62,12 +62,12 @@ html"""
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: start;
+	justify-content: center;
+	gap: 20px;
 
-	gap: 15px;
 	height: 500px;
 	margin-top: 20px;
-	padding: 40px 10px 0px 10px;
+	padding: 0px 10px 0px 10px;
 	border: 5px solid #adb5bd;
 	border-radius: 50px;
 	box-shadow: 0px 5px 20px rgba(255, 255, 255, 0.25);
@@ -82,7 +82,7 @@ html"""
 }
 
 .nb-intro-header {
-	display: box;
+	margin: 0;
 	color: #adb5bd;
 	font-family: Vollkorn, serif;
 	font-size: 32px;
@@ -91,15 +91,14 @@ html"""
 }
 
 .nb-intro-title {
+	margin: 0;
+	margin-bottom: 15px;
 	color: #f1f3f5;
 	font-family: Vollkorn, serif;
 	font-size: 50px;
 	font-weight: 600;
 	font-feature-settings: 'lnum', 'pnum';
 	line-height: 1.2;
-}
-
-.logo {
 }
 
 body {

@@ -21,7 +21,7 @@ html"""
 		<p class="nb-intro-title"> Título de la sección dentro del tema a tratar</p>
 		<p style="text-align:center;"> 
 			<img src="https://github.com/RayleighLord/Resources/blob/main/img/logos/logo.png?raw=true" alt="RayleighLord"
-			width="150"
+			width="30%"
 			class="logo">
 		</p>
 	</div>
@@ -52,12 +52,12 @@ html"""
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: start;
+	justify-content: center;
+	gap: 20px;
 
-	gap: 15px;
 	height: 500px;
 	margin-top: 20px;
-	padding: 40px 10px 0px 10px;
+	padding: 0px 10px 0px 10px;
 	border: 5px solid #adb5bd;
 	border-radius: 50px;
 	box-shadow: 0px 5px 20px rgba(255, 255, 255, 0.25);
@@ -72,7 +72,7 @@ html"""
 }
 
 .nb-intro-header {
-	display: box;
+	margin: 0;
 	color: #adb5bd;
 	font-family: Vollkorn, serif;
 	font-size: 32px;
@@ -81,15 +81,14 @@ html"""
 }
 
 .nb-intro-title {
+	margin: 0;
+	margin-bottom: 15px;
 	color: #f1f3f5;
 	font-family: Vollkorn, serif;
 	font-size: 50px;
 	font-weight: 600;
 	font-feature-settings: 'lnum', 'pnum';
 	line-height: 1.2;
-}
-
-.logo {
 }
 
 body {
@@ -383,7 +382,7 @@ version = "17.4.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╟─719af058-3505-4ede-be04-557a448d8ade
+# ╠═719af058-3505-4ede-be04-557a448d8ade
 # ╠═58fdf9e2-8dc6-43e2-9798-8e992dac2053
 # ╟─82282db6-240f-4318-a475-f91229aa6c76
 # ╟─19c98e87-2114-4362-aa55-4859c20ffc27
