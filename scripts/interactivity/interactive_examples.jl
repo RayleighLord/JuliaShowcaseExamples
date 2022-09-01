@@ -112,64 +112,46 @@ main preamble {
 </style>
 """
 
-# ╔═╡ a5a0758f-5996-4ab7-a796-b5bec68fabc8
-train_x, train_y = MNIST.traindata();
+# ╔═╡ 1607124e-1839-4eab-9618-737fe177ba60
+function get_data()
+	train_x, train_y = MNIST.traindata()
+	m, n, = size(train_x)
+	
+	permvec = sortperm(train_y)
+	ids = cumsum([count(x -> x == i, train_y) for i in 0:8]) .+ 1
+	ids = [1, ids...]
+	
+	train_x = train_x[:, :, permvec]
 
-# ╔═╡ 18059e1c-370e-4548-a6c3-52befbb9a103
-train_x
+	flat_train_x = reduce(vcat, train_x)
 
-# ╔═╡ a7540bd3-9542-445c-b754-84da9defa5ec
-permvec = sortperm(train_y)
+	train_pad = reshape(flat_train_x, m * n, :)
 
-# ╔═╡ 4344c9bb-fb22-4e5b-b253-f5e79c046331
-train_y[permvec]
+	train = Array{eltype(train_x)}(undef, m * n, 800, 10)
 
-# ╔═╡ 8449451f-a587-46d3-b3fa-bfc45ef7811f
-arr = train_x[:, :, 1:800]
+	for i in 1:10
+		@. train[:, : , i] = train_pad[:, ids[i]:(ids[i] + 799)]
+	end
 
-# ╔═╡ 32fa7707-f371-4831-a3a3-af0c154f581c
-flat_arr = reduce(vcat, arr)
+	return train
+	
+end
 
-# ╔═╡ c9df5d1d-ecdd-4dbe-8a84-0f45989cf44e
-tall_arr = reshape(arr, 784, :)
+# ╔═╡ ebed04e9-521d-445e-b884-f990b735e36c
+function generate_image(number)
+	n = Int64(√(length(number)))
+	num_reshaped = reshape(number, n, n)'
+	Gray.(num_reshaped)
+end
 
-# ╔═╡ e371f2fe-fc88-4f7d-b66c-926fb4e2fc7a
-one = reshape(tall_arr[:, 1], 28, 28)'
+# ╔═╡ 14540558-e8da-4833-bb35-ba3235dd5ff9
+train = get_data();
 
-# ╔═╡ 2c7621f7-a726-4427-be70-68ea0a4d6000
-Gray.(one)
+# ╔═╡ 27dd7a5e-4bf5-4ae1-83b5-b82c21ffd830
+zero = generate_image(train[:, 1, 1])
 
-# ╔═╡ 0797877e-a115-481e-9522-19fd91e001b1
-space = html"<br><br><br>";
-
-# ╔═╡ 82282db6-240f-4318-a475-f91229aa6c76
-note(text) = Markdown.MD(Markdown.Admonition("note", "Nota", [text]));
-
-# ╔═╡ 19c98e87-2114-4362-aa55-4859c20ffc27
-hint(text) = Markdown.MD(Markdown.Admonition("hint", "Pista 🔎", [text]));
-
-# ╔═╡ 80e9a650-57d9-4e11-acad-aa0f5894ef34
-almost(text) = Markdown.MD(Markdown.Admonition("warning", "¡Ya casi lo tienes!", [text]));
-
-# ╔═╡ 7a89b51b-51d7-4090-8a9f-2585363183fc
-still_missing(text=md"Sustituye `missing` por tu respuesta.") = Markdown.MD(Markdown.Admonition("warning", "Completa el ejercicio 🧐", [text]));
-
-# ╔═╡ a9cd5b48-921f-4b48-8c63-5060c5d7c1d5
-keep_working(text=md"La respuesta todavía no es correcta.") = Markdown.MD(Markdown.Admonition("danger", "¡Sigue intentándolo!", [text]));
-
-# ╔═╡ 20089647-2ac5-405f-b8ba-aa5dd1733271
-good = [md"¡Buen trabajo! 🎉", md"¡Correcto! 🎉", md"¡Bien hecho! 👍", md"La respuesta es correcta 🎉", md"Continúa a la siguiente pregunta 👍", md"¡Enhorabuena! 🎉",];
-
-# ╔═╡ 8fd2f719-294a-41cc-bb47-5afbbc2bfa9c
-correct(text=rand(good)) = Markdown.MD(Markdown.Admonition("correct", "Lo conseguiste!", [text]));
-
-# ╔═╡ 3f6aec31-e108-4caf-bec1-c4ae57b6b72c
-not_defined(variable_name) = Markdown.MD(Markdown.Admonition("danger", "¡Cuidado!", [md"Aségurate de haber definido una variable llamada **$(Markdown.Code(string(variable_name)))**"]));
-
-# ╔═╡ 5ec67974-c7dc-43d6-a0ef-b804ab1bf64b
-todo(text) = HTML("""<div
-	style="background: rgb(220, 200, 255); padding: 2em; border-radius: 1em;"
-	><h2>TODO</h2>$(repr(MIME"text/html"(), text))</div>""");
+# ╔═╡ f12eb921-b1e9-4e63-8bc1-cf987e0f76aa
+Im = fill(Gray.(zero), 3, 3)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -193,7 +175,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "088f4266fdc2da86aefc0708abe14f2a13e61053"
+project_hash = "5c85c2c7084fc5cde2d9b5210b86b54d15a76a81"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -1744,24 +1726,10 @@ version = "1.4.1+0"
 # ╟─e6320cf8-9301-11ec-3f30-93a359f008f5
 # ╠═24ebda93-84c0-45ad-9614-3713c3b10f6a
 # ╠═c32f561b-b8d9-4ee8-a9e1-72f05025ab7d
-# ╠═a5a0758f-5996-4ab7-a796-b5bec68fabc8
-# ╠═18059e1c-370e-4548-a6c3-52befbb9a103
-# ╠═a7540bd3-9542-445c-b754-84da9defa5ec
-# ╠═4344c9bb-fb22-4e5b-b253-f5e79c046331
-# ╠═8449451f-a587-46d3-b3fa-bfc45ef7811f
-# ╠═32fa7707-f371-4831-a3a3-af0c154f581c
-# ╠═c9df5d1d-ecdd-4dbe-8a84-0f45989cf44e
-# ╠═e371f2fe-fc88-4f7d-b66c-926fb4e2fc7a
-# ╠═2c7621f7-a726-4427-be70-68ea0a4d6000
-# ╟─0797877e-a115-481e-9522-19fd91e001b1
-# ╟─82282db6-240f-4318-a475-f91229aa6c76
-# ╟─19c98e87-2114-4362-aa55-4859c20ffc27
-# ╟─80e9a650-57d9-4e11-acad-aa0f5894ef34
-# ╟─7a89b51b-51d7-4090-8a9f-2585363183fc
-# ╟─a9cd5b48-921f-4b48-8c63-5060c5d7c1d5
-# ╟─20089647-2ac5-405f-b8ba-aa5dd1733271
-# ╟─8fd2f719-294a-41cc-bb47-5afbbc2bfa9c
-# ╟─3f6aec31-e108-4caf-bec1-c4ae57b6b72c
-# ╟─5ec67974-c7dc-43d6-a0ef-b804ab1bf64b
+# ╟─1607124e-1839-4eab-9618-737fe177ba60
+# ╟─ebed04e9-521d-445e-b884-f990b735e36c
+# ╠═14540558-e8da-4833-bb35-ba3235dd5ff9
+# ╠═27dd7a5e-4bf5-4ae1-83b5-b82c21ffd830
+# ╠═f12eb921-b1e9-4e63-8bc1-cf987e0f76aa
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

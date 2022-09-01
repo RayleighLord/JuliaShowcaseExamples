@@ -109,6 +109,35 @@ main preamble {
 </style>
 """
 
+# ╔═╡ 82282db6-240f-4318-a475-f91229aa6c76
+note(text) = Markdown.MD(Markdown.Admonition("note", "Nota", [text]));
+
+# ╔═╡ 19c98e87-2114-4362-aa55-4859c20ffc27
+hint(text) = Markdown.MD(Markdown.Admonition("hint", "Pista 🔎", [text]));
+
+# ╔═╡ 80e9a650-57d9-4e11-acad-aa0f5894ef34
+almost(text) = Markdown.MD(Markdown.Admonition("warning", "¡Ya casi lo tienes!", [text]));
+
+# ╔═╡ 7a89b51b-51d7-4090-8a9f-2585363183fc
+still_missing(text=md"Sustituye `missing` por tu respuesta.") = Markdown.MD(Markdown.Admonition("warning", "Completa el ejercicio 🧐", [text]));
+
+# ╔═╡ a9cd5b48-921f-4b48-8c63-5060c5d7c1d5
+keep_working(text=md"La respuesta todavía no es correcta.") = Markdown.MD(Markdown.Admonition("danger", "¡Sigue intentándolo!", [text]));
+
+# ╔═╡ 20089647-2ac5-405f-b8ba-aa5dd1733271
+good = [md"¡Buen trabajo! 🎉", md"¡Correcto! 🎉", md"¡Bien hecho! 👍", md"La respuesta es correcta 🎉", md"Continúa a la siguiente pregunta 👍", md"¡Enhorabuena! 🎉",];
+
+# ╔═╡ 8fd2f719-294a-41cc-bb47-5afbbc2bfa9c
+correct(text=rand(good)) = Markdown.MD(Markdown.Admonition("correct", "Lo conseguiste!", [text]));
+
+# ╔═╡ 3f6aec31-e108-4caf-bec1-c4ae57b6b72c
+not_defined(variable_name) = Markdown.MD(Markdown.Admonition("danger", "¡Cuidado!", [md"Aségurate de haber definido una variable llamada **$(Markdown.Code(string(variable_name)))**"]));
+
+# ╔═╡ 5ec67974-c7dc-43d6-a0ef-b804ab1bf64b
+todo(text) = HTML("""<div
+	style="background: rgb(220, 200, 255); padding: 2em; border-radius: 1em;"
+	><h2>TODO</h2>$(repr(MIME"text/html"(), text))</div>""");
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -355,5 +384,14 @@ version = "17.4.0+0"
 # ╔═╡ Cell order:
 # ╟─719af058-3505-4ede-be04-557a448d8ade
 # ╠═58fdf9e2-8dc6-43e2-9798-8e992dac2053
+# ╟─82282db6-240f-4318-a475-f91229aa6c76
+# ╟─19c98e87-2114-4362-aa55-4859c20ffc27
+# ╟─80e9a650-57d9-4e11-acad-aa0f5894ef34
+# ╟─7a89b51b-51d7-4090-8a9f-2585363183fc
+# ╟─a9cd5b48-921f-4b48-8c63-5060c5d7c1d5
+# ╟─20089647-2ac5-405f-b8ba-aa5dd1733271
+# ╟─8fd2f719-294a-41cc-bb47-5afbbc2bfa9c
+# ╟─3f6aec31-e108-4caf-bec1-c4ae57b6b72c
+# ╟─5ec67974-c7dc-43d6-a0ef-b804ab1bf64b
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
