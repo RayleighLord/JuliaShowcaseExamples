@@ -153,6 +153,74 @@ zero = generate_image(train[:, 1, 1])
 # ╔═╡ f12eb921-b1e9-4e63-8bc1-cf987e0f76aa
 Im = fill(Gray.(zero), 3, 3)
 
+# ╔═╡ 9bf39df3-8329-47c3-a3f8-ae7a3721cb5a
+"""
+	compute_subspaces(A::AbstractArray, k::Integer)
+
+Calcula los `d` subespacios ortonormales de dimensión `k` de la matrix `A` de dimensión `m x n x d`.
+
+Argumentos:
+- `A` es una matriz de tamaño `m x n x d` con `n` números de cada clase y dimensión `m` por cada número.
+- `k` es la dimensión del subespacio ortonormal asociado (entre 1 y `min(m, n)`)
+
+Salida:
+- `U`es una matriz de tamaño `m x k x d`, conteniendo un conjunto de `k` vectores ortonormales de dimensión `m` para cada número.
+
+"""
+function compute_subspaces(A::AbstractArray, k::Integer)
+	m, n, d = size(A)
+	
+	U = Array{Float64}(undef, m, k, d)
+	for j in 1:d
+		Uj = svd(A[:, :, j]).U
+		U[:, :, j] = Uj[:, 1:k]
+	end
+
+	return U
+end
+
+# ╔═╡ c92f8ff5-cb0d-4039-bbb7-adf189cda197
+"""
+	classify_nearest_subspace(X::AbstractVector, U::AbstractArray{T, 3} where {T}; k=size(U, 2))
+
+Dada una imagen de un número almacenada en el vector `X`, clasifica qué número es.
+
+Argumentos:
+- `X` es una vector de tamaño `m`.
+- `U`es una matriz de tamaño `m x k x d`, conteniendo un conjunto de `k` vectores ortonormales de dimensión `m` para cada número.
+- `k` es la dimensión del subespacio ortonormal asociado. Por defecto utiliza el valor de la matriz `U`.
+
+Salida:
+- `U`es una matrix de tamaño `m x k x d`, conteniendo un conjunto de `k` vectores ortonormales de dimensión `m` para cada número.
+
+"""
+function classify_nearest_subspace(X::AbstractVector, U::AbstractArray{T, 3} where {T}; k=size(U, 2))
+
+	d = size(U, 3)
+	error = zeros(d)
+
+	for j in 1:d
+		Uj = U[:, 1:k, j]
+		error[j] = sum(abs2, X - Uj * (Uj' * X))
+	end
+
+	label = findmin(error)[2] - 1
+	return label
+end
+
+# ╔═╡ 64fb6159-a93c-47c6-a63b-e7e182a7ff93
+# Adaptamos la función para si se introduce el número en forma de matrix
+classify_nearest_subspace(X::AbstractMatrix, U::AbstractArray{T, 3} where {T}; k=size(U, 2)) = classify_nearest_subspace(X[:], U; k=k)
+
+# ╔═╡ e36d5bad-d36f-4fbb-80ed-fb6b0e012847
+U_train = compute_subspaces(train, 10);
+
+# ╔═╡ c0cb8691-eebe-4786-b8cc-8a937712fbf8
+test = train[:, 1, 2]
+
+# ╔═╡ 1178bcc8-7366-4780-8aeb-9944c87b0015
+classify_nearest_subspace(test, U_train)
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -1731,5 +1799,11 @@ version = "1.4.1+0"
 # ╠═14540558-e8da-4833-bb35-ba3235dd5ff9
 # ╠═27dd7a5e-4bf5-4ae1-83b5-b82c21ffd830
 # ╠═f12eb921-b1e9-4e63-8bc1-cf987e0f76aa
+# ╠═9bf39df3-8329-47c3-a3f8-ae7a3721cb5a
+# ╠═c92f8ff5-cb0d-4039-bbb7-adf189cda197
+# ╠═64fb6159-a93c-47c6-a63b-e7e182a7ff93
+# ╠═e36d5bad-d36f-4fbb-80ed-fb6b0e012847
+# ╠═c0cb8691-eebe-4786-b8cc-8a937712fbf8
+# ╠═1178bcc8-7366-4780-8aeb-9944c87b0015
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
