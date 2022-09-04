@@ -150,9 +150,6 @@ train = get_data();
 # ╔═╡ 27dd7a5e-4bf5-4ae1-83b5-b82c21ffd830
 zero = generate_image(train[:, 1, 1])
 
-# ╔═╡ f12eb921-b1e9-4e63-8bc1-cf987e0f76aa
-Im = fill(Gray.(zero), 3, 3)
-
 # ╔═╡ 9bf39df3-8329-47c3-a3f8-ae7a3721cb5a
 """
 	compute_subspaces(A::AbstractArray, k::Integer)
@@ -221,13 +218,7 @@ test = train[:, 1, 2]
 # ╔═╡ 1178bcc8-7366-4780-8aeb-9944c87b0015
 classify_nearest_subspace(test, U_train)
 
-# ╔═╡ 10475f8a-7d83-4117-9c5f-07e5c87f7b84
-begin
-	hmap = heatmap(reshape(test, 28, 28)'; color = :inferno)
-	plot(hmap; size = (300, 300))
-end
-
-# ╔═╡ 3b07f80b-d5c8-4fe9-bf3b-63579b992f10
+# ╔═╡ c34b4e66-fb61-40f1-8d62-bfebbc626aec
 theme(
     :wong,
 	showaxis=:false,
@@ -239,6 +230,15 @@ theme(
 	alpha = 0.9,
 	color = :inferno
 )
+
+# ╔═╡ 10475f8a-7d83-4117-9c5f-07e5c87f7b84
+begin
+	hmap = heatmap(reshape(test, 28, 28)'; color = :inferno)
+	plot(hmap; size = (300, 300))
+end
+
+# ╔═╡ 3b07f80b-d5c8-4fe9-bf3b-63579b992f10
+heatmap(reshape(-U_train[:, 1, 1], 28, 28)'; color = :inferno)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -262,7 +262,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "088f4266fdc2da86aefc0708abe14f2a13e61053"
+project_hash = "5c85c2c7084fc5cde2d9b5210b86b54d15a76a81"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -1812,13 +1812,13 @@ version = "1.4.1+0"
 # ╟─ebed04e9-521d-445e-b884-f990b735e36c
 # ╠═14540558-e8da-4833-bb35-ba3235dd5ff9
 # ╠═27dd7a5e-4bf5-4ae1-83b5-b82c21ffd830
-# ╠═f12eb921-b1e9-4e63-8bc1-cf987e0f76aa
 # ╠═9bf39df3-8329-47c3-a3f8-ae7a3721cb5a
 # ╠═c92f8ff5-cb0d-4039-bbb7-adf189cda197
 # ╠═64fb6159-a93c-47c6-a63b-e7e182a7ff93
 # ╠═e36d5bad-d36f-4fbb-80ed-fb6b0e012847
 # ╠═c0cb8691-eebe-4786-b8cc-8a937712fbf8
 # ╠═1178bcc8-7366-4780-8aeb-9944c87b0015
+# ╠═c34b4e66-fb61-40f1-8d62-bfebbc626aec
 # ╠═10475f8a-7d83-4117-9c5f-07e5c87f7b84
 # ╠═3b07f80b-d5c8-4fe9-bf3b-63579b992f10
 # ╟─00000000-0000-0000-0000-000000000001
