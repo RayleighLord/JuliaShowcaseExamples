@@ -4,9 +4,19 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ 24ebda93-84c0-45ad-9614-3713c3b10f6a
 begin
-	using PlutoUI, Images, LinearAlgebra, Plots
+	using PlutoUI, Images, LinearAlgebra, Plots, HypertextLiteral
 	PlutoUI.TableOfContents(title="Tabla de Contenidos", depth=3, aside=true, indent=true)
 end
 
@@ -210,7 +220,7 @@ end
 classify_nearest_subspace(X::AbstractMatrix, U::AbstractArray{T, 3} where {T}; k=size(U, 2)) = classify_nearest_subspace(X[:], U; k=k)
 
 # ╔═╡ e36d5bad-d36f-4fbb-80ed-fb6b0e012847
-U_train = compute_subspaces(train, 10);
+U_train = compute_subspaces(train, 30);
 
 # ╔═╡ c0cb8691-eebe-4786-b8cc-8a937712fbf8
 test = train[:, 1, 2]
@@ -226,7 +236,7 @@ theme(
 	yflip = true, 
 	aspect_ratio=:equal,
 	ticks = :false,
-	colorbar = :false,
+	colorbar = :true,
 	alpha = 0.9,
 	color = :inferno
 )
@@ -238,11 +248,91 @@ begin
 end
 
 # ╔═╡ 3b07f80b-d5c8-4fe9-bf3b-63579b992f10
-heatmap(reshape(-U_train[:, 1, 1], 28, 28)'; color = :inferno)
+heatmap(reshape(-U_train[:, 1, 3], 28, 28)'; color = :inferno)
+
+# ╔═╡ 33000dd1-c8b9-4e17-b8d2-004fa32e8c52
+@htl("""
+	
+<div>
+	$(@bind classify_canvas Button("Classify"))
+	$(@bind clear_canvas Button("Clear"))
+</div>
+
+<style>
+
+
+</style>
+
+""")
+
+# ╔═╡ 3d2750e4-e19d-4cbe-8d18-826ff9cb5c3f
+@htl("""
+
+<!-- Update cell if we want to clear the canvas -->
+<!-- $(clear_canvas) -->
+
+Try writing a digit in the box!<br><br>
+<canvas id="canvas" width="200" height="200"></canvas>
+
+<style>
+
+#canvas {
+	border: 1px solid grey;
+}
+
+
+</style>
+
+<script>
+	const canvas = document.getElementById('canvas');
+	const ctx = canvas.getContext('2d');
+	
+	let mouseDown = false;
+	let paths = [];
+	
+	canvas.onmousedown = () => {
+		mouseDown = true;
+		paths.push([]);
+	};
+	window.onmouseup = () => {mouseDown=false;};
+	
+	canvas.onmousemove = function(e) {
+		const rect = canvas.getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+	
+		// The mouse is being dragged
+		if(mouseDown) {
+			paths[paths.length - 1].push([x, y]);
+			render();
+		}
+	}
+	
+	
+	// Render our list of points
+	function render() {
+		if(paths.length === 0) return;
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	
+		for(let p=0; p<paths.length; p++) {
+			const points = paths[p];
+			ctx.moveTo(points[0][0], points[0][1]);
+			for(let i=1; i<points.length; i++) {
+				ctx.lineTo(points[i][0], points[i][1]);
+			}
+			ctx.strokeStyle = 'black';
+			ctx.lineWidth = 10;
+			ctx.stroke();
+		}
+	}
+</script>
+	
+""")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 Images = "916415d5-f1e6-5110-898d-aaa5f9f070e0"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 MLDatasets = "eb30cadb-4394-5ae3-aed4-317e484a6458"
@@ -250,6 +340,7 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
+HypertextLiteral = "~0.9.4"
 Images = "~0.25.2"
 MLDatasets = "~0.5.15"
 Plots = "~1.31.7"
@@ -262,7 +353,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "5c85c2c7084fc5cde2d9b5210b86b54d15a76a81"
+project_hash = "94c09f355867ae2dd5cbebda732c9aa08ec1d256"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -664,9 +755,9 @@ version = "0.16.11"
 
 [[deps.HDF5_jll]]
 deps = ["Artifacts", "JLLWrappers", "LibCURL_jll", "Libdl", "OpenSSL_jll", "Pkg", "Zlib_jll"]
-git-tree-sha1 = "c003b31e2e818bc512b0ff99d7dce03b0c1359f5"
+git-tree-sha1 = "4cc2bb72df6ff40b055295fdef6d92955f9dede8"
 uuid = "0234f1f7-429e-5d53-9886-15a909be8d59"
-version = "1.12.2+1"
+version = "1.12.2+2"
 
 [[deps.HTTP]]
 deps = ["Base64", "Dates", "IniFile", "Logging", "MbedTLS", "NetworkOptions", "Sockets", "URIs"]
@@ -1821,5 +1912,7 @@ version = "1.4.1+0"
 # ╠═c34b4e66-fb61-40f1-8d62-bfebbc626aec
 # ╠═10475f8a-7d83-4117-9c5f-07e5c87f7b84
 # ╠═3b07f80b-d5c8-4fe9-bf3b-63579b992f10
+# ╠═3d2750e4-e19d-4cbe-8d18-826ff9cb5c3f
+# ╠═33000dd1-c8b9-4e17-b8d2-004fa32e8c52
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
