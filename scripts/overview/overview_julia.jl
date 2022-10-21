@@ -572,7 +572,7 @@ PyCall = "~1.94.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.8.0"
+julia_version = "1.8.1"
 manifest_format = "2.0"
 project_hash = "764a2da6c23813b09ad1fec485fcb8257e385a1c"
 
@@ -836,7 +836,7 @@ version = "17.4.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═e6320cf8-9301-11ec-3f30-93a359f008f5
+# ╟─e6320cf8-9301-11ec-3f30-93a359f008f5
 # ╠═85655f3a-d7ec-4c39-adcb-6b5893a435f9
 # ╟─88e26e6d-4dbf-427c-8c29-88d315b26361
 # ╟─b14db253-adee-4588-a87a-d31ba0b3f289
