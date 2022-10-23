@@ -207,11 +207,11 @@ Ahora, vamos a generar una función que agrupe los términos orden a orden de $\
 
 # ╔═╡ 1db92443-522e-40e0-9b63-64997805ba2a
 function collect_powers(eq, x, ns; max_power=100)
-    eq = substitute(expand(eq), Dict(x^j => 0 for j = last(ns)+1:max_power))
+    eq = substitute(expand(eq), Dict(x^j => 0 for j in last(ns)+1:max_power))
 
     eqs = []
     for i in ns
-        powers = Dict(x^j => (i == j ? 1 : 0) for j = 1:last(ns))
+        powers = Dict(x^j => (i == j ? 1 : 0) for j in 1:last(ns))
         push!(eqs, substitute(eq, powers))
     end
     eqs
@@ -234,7 +234,7 @@ Ahora solo falta una función que resuelva todas las ecuaciones anteriores para 
 function solve_coef(eqs, ps)
     vals = Dict()
 
-    for i = 1:length(ps)
+    for i in eachindex(ps)
         eq = substitute(eqs[i], vals)
         vals[ps[i]] = Symbolics.solve_for(eq ~ 0, ps[i])
     end
@@ -305,7 +305,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.2"
 manifest_format = "2.0"
-project_hash = "7ace2967718542ac81630f68e1d97245ad8a7448"
+project_hash = "c6770dfe3024186a6321acd1d86e2f44b557524c"
 
 [[deps.AbstractAlgebra]]
 deps = ["GroupsCore", "InteractiveUtils", "LinearAlgebra", "MacroTools", "Markdown", "Random", "RandomExtensions", "SparseArrays", "Test"]
