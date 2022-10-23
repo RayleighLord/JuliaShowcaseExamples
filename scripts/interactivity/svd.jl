@@ -1,6 +1,12 @@
 ### A Pluto.jl notebook ###
 # v0.19.14
 
+#> [frontmatter]
+#> title = "Julia SVD Demonstration"
+#> date = "2022-10-23"
+#> tags = ["Julia", "Programming", "Numerical"]
+#> description = "Julia using the SVD to showcase image compression"
+
 using Markdown
 using InteractiveUtils
 

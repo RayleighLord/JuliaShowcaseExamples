@@ -1,6 +1,12 @@
 ### A Pluto.jl notebook ###
 # v0.19.14
 
+#> [frontmatter]
+#> title = "Julia Newton Method"
+#> date = "2022-10-23"
+#> tags = ["Julia", "Programming", "Numerical"]
+#> description = "Newton's method using Julia and its beautiful syntax"
+
 using Markdown
 using InteractiveUtils
 

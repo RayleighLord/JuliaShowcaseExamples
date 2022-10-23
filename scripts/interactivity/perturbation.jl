@@ -1,6 +1,12 @@
 ### A Pluto.jl notebook ###
 # v0.19.14
 
+#> [frontmatter]
+#> title = "Julia Perturbation Theory"
+#> date = "2022-10-23"
+#> tags = ["Julia", "Programming", "Numerical"]
+#> description = "Aplication of Julia Symbolics package to perturbation theory"
+
 using Markdown
 using InteractiveUtils
 

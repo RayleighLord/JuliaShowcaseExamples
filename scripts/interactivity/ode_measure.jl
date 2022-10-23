@@ -1,6 +1,12 @@
 ### A Pluto.jl notebook ###
 # v0.19.14
 
+#> [frontmatter]
+#> title = "Julia Package Interoperability"
+#> date = "2022-10-23"
+#> tags = ["Julia", "Programming", "Numerical"]
+#> description = "Julia example with Measurements package and DifferentialEquations"
+
 using Markdown
 using InteractiveUtils
 

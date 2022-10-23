@@ -1,5 +1,11 @@
 ### A Pluto.jl notebook ###
-# v0.19.11
+# v0.19.14
+
+#> [frontmatter]
+#> title = "Julia Overview"
+#> date = "2022-10-23"
+#> tags = ["Julia", " Programming ", "Numerical"]
+#> description = "Quick introduction to the Julia Language"
 
 using Markdown
 using InteractiveUtils
@@ -572,7 +578,7 @@ PyCall = "~1.94.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.8.1"
+julia_version = "1.8.2"
 manifest_format = "2.0"
 project_hash = "764a2da6c23813b09ad1fec485fcb8257e385a1c"
 
@@ -791,7 +797,7 @@ version = "1.0.0"
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
 uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
-version = "1.10.0"
+version = "1.10.1"
 
 [[deps.Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]

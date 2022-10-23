@@ -1,6 +1,12 @@
 ### A Pluto.jl notebook ###
 # v0.19.14
 
+#> [frontmatter]
+#> title = "Julia Numerical Integration"
+#> date = "2022-10-23"
+#> tags = ["Julia", "Programming", "Numerical"]
+#> description = "Julia Numerical Integration Showcase"
+
 using Markdown
 using InteractiveUtils
 
